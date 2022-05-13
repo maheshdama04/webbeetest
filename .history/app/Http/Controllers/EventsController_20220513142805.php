@@ -98,7 +98,13 @@ class EventsController extends BaseController
 
     public function getEventsWithWorkshops() {
         // throw new \Exception('implement in coding task 1');
-        $events = Event::with('workshops')->get();
+        $events = Event::with('workshops')
+                        ->whereHas('firstWorkshops', function($q1) {
+                            // $q1->where('start', date('Y-m-d')); //To get the real events not started yet.
+                            $q1->whereDate('start', '>', '2021-08-20');
+                        })
+                        ->get();
+        dd($events->toArray());
         return response()->json($events);
     }
 
@@ -178,13 +184,6 @@ class EventsController extends BaseController
      */
 
     public function getFutureEventsWithWorkshops() {
-        // throw new \Exception('implement in coding task 2');
-        $events = Event::with('workshops')
-                        ->whereHas('firstWorkshops', function($q1) {
-                            // $q1->where('start', date('Y-m-d')); //To get the real events not started yet.
-                            $q1->whereDate('start', '>', '2021-08-20'); //to get the output of the test
-                        })
-                        ->get();
-        return response()->json($events);
+        throw new \Exception('implement in coding task 2');
     }
 }

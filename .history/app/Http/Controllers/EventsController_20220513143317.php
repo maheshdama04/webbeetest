@@ -179,6 +179,7 @@ class EventsController extends BaseController
 
     public function getFutureEventsWithWorkshops() {
         // throw new \Exception('implement in coding task 2');
+        // throw new \Exception('implement in coding task 1');
         $events = Event::with('workshops')
                         ->whereHas('firstWorkshops', function($q1) {
                             // $q1->where('start', date('Y-m-d')); //To get the real events not started yet.
