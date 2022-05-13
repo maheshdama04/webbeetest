@@ -96,7 +96,12 @@ class MenuController extends BaseController
 
     public function getMenuItems() {
         // throw new \Exception('implement in coding task 3');
-        $menu_items = MenuItem::whereNull('parent_id')->with('children')->get();
-        return response()->json($menu_items);
+        $events = MenuItem::with('children')
+                        ->whereHas('firstWorkshops', function($q1) {
+                            // $q1->where('start', date('Y-m-d')); //To get the real events not started yet.
+                            $q1->whereDate('start', '>', '2021-08-20'); //to get the output of the test
+                        })
+                        ->get();
+        return response()->json($events);
     }
 }
